@@ -1,11 +1,17 @@
+import {
+	ChakraProvider,
+	ColorModeScript,
+	ThemeConfig,
+	extendTheme,
+} from "@chakra-ui/react";
+import { mode } from "@chakra-ui/theme-tools";
 import React from "react";
 import ReactDOM from "react-dom/client";
+import { Provider } from "react-redux";
+import { BrowserRouter } from "react-router-dom";
 import App from "./App.tsx";
 import "./index.css";
-import { ChakraProvider } from "@chakra-ui/react";
-import { mode } from "@chakra-ui/theme-tools";
-import { extendTheme, ThemeConfig, ColorModeScript } from "@chakra-ui/react";
-import { BrowserRouter } from "react-router-dom";
+import store from "./store/store.ts";
 
 const styles = {
 	global: (props) => ({
@@ -33,10 +39,12 @@ const theme = extendTheme({ config, styles, colors });
 ReactDOM.createRoot(document.getElementById("root")!).render(
 	<React.StrictMode>
 		<BrowserRouter>
-			<ChakraProvider theme={theme}>
-				<ColorModeScript initialColorMode={theme.config.initialColorMode} />
-				<App />
-			</ChakraProvider>
+			<Provider store={store}>
+				<ChakraProvider theme={theme}>
+					<ColorModeScript initialColorMode={theme.config.initialColorMode} />
+					<App />
+				</ChakraProvider>
+			</Provider>
 		</BrowserRouter>
 	</React.StrictMode>
 );
