@@ -22,6 +22,7 @@ import { useSignupMutation } from "../store/api/userApi";
 import { authActions } from "../store/reducers/authReducer";
 import { CustomeErrorType } from "../types/userTypes";
 import { useNavigate } from "react-router-dom";
+import { userActions } from "../store/reducers/userReducer";
 
 const SignupCard = () => {
 	const [signupUser, { data, error, isSuccess }] = useSignupMutation();
@@ -48,6 +49,7 @@ const SignupCard = () => {
 			showToast("Success", "Account created successfully", "success");
 			localStorage.setItem("user-threads", JSON.stringify(data));
 			navigate("/");
+			dispatch(userActions.setUserInfo(data));
 		}
 	}, [error, isSuccess, data, dispatch, showToast, navigate]);
 

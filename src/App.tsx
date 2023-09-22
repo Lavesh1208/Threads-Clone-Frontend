@@ -8,6 +8,7 @@ import AuthPage from "./pages/AuthPage";
 import { useSelector } from "react-redux";
 import { RootState } from "./store/store";
 import LogoutButton from "./components/LogoutButton";
+import UpdateProfilePage from "./pages/UpdateProfilePage";
 
 function App() {
 	const { userInfo } = useSelector((state: RootState) => state.user);
@@ -23,6 +24,10 @@ function App() {
 				<Route
 					path="/auth"
 					element={!userInfo ? <AuthPage /> : <Navigate to="/" />}
+				/>
+				<Route
+					path="/update"
+					element={userInfo ? <UpdateProfilePage /> : <Navigate to="/auth" />}
 				/>
 				<Route path="/:username" element={<UserPage />} />
 				<Route path="/:username/post/:pid" element={<PostPage />} />
