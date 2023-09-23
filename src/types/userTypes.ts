@@ -9,6 +9,8 @@ export interface UserResponse extends UserInput {
 	_id: string;
 	profilePic: string;
 	bio: string;
+	followers: string[];
+	following: string[];
 	token: string;
 	createdAt: Date;
 	updatedAt: Date;

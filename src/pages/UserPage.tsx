@@ -1,10 +1,49 @@
+import { useEffect, useState } from "react";
 import UserHeader from "../components/UserHeader";
 import UserPost from "../components/UserPost";
+import { useNavigate, useParams } from "react-router-dom";
+import { useGetUserQuery } from "../store/api/userApi";
+import useShowToast from "../hooks/useShowToast";
+import { CustomeErrorType, UserResponse } from "../types/userTypes";
+import { Spinner } from "@chakra-ui/react";
+import { useSelector } from "react-redux";
+import { RootState } from "../store/store";
 
 const UserPage = () => {
+	const [user, setUser] = useState<UserResponse | null>(null);
+	const { username } = useParams();
+	const showToast = useShowToast();
+	const navigate = useNavigate();
+	const currentUser = useSelector((state: RootState) => state.user.userInfo);
+	const { data, isSuccess, error, refetch } = useGetUserQuery(username!);
+
+	useEffect(() => {
+		if (error) {
+			const errorMessage = (error as CustomeErrorType).data?.message;
+			showToast("Error", errorMessage, "error");
+			navigate("/");
+		} else if (isSuccess && data) {
+			setUser(data);
+		}
+	}, [error, isSuccess, data, showToast, navigate]);
+
+	if (!user) {
+		return (
+			<div>
+				<Spinner
+					thickness="4px"
+					speed="0.65s"
+					emptyColor="gray.200"
+					color="blue.500"
+					size="xl"
+				/>
+			</div>
+		);
+	}
+
 	return (
 		<div>
-			<UserHeader />
+			<UserHeader user={user} currentUser={currentUser} refetch={refetch} />
 			<UserPost
 				likes={4893}
 				replies={3837}

@@ -1,5 +1,5 @@
 import { ChangeEvent, useState } from "react";
-import useShowToast from "./useToastHook";
+import useShowToast from "./useShowToast";
 
 const usePreviewImg = () => {
 	const [imgUrl, setImgUrl] = useState<string | null>(null);

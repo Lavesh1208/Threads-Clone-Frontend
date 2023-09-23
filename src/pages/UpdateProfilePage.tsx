@@ -15,7 +15,7 @@ import { RootState } from "../store/store";
 import { useDispatch, useSelector } from "react-redux";
 import userPreviewImg from "../hooks/usePreviewImg";
 import { useUpdateUserMutation } from "../store/api/userApi";
-import useShowToast from "../hooks/useToastHook";
+import useShowToast from "../hooks/useShowToast";
 import { CustomeErrorType } from "../types/userTypes";
 import { userActions } from "../store/reducers/userReducer";
 

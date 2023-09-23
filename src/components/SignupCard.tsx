@@ -17,7 +17,7 @@ import {
 } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
-import useShowToast from "../hooks/useToastHook";
+import useShowToast from "../hooks/useShowToast";
 import { useSignupMutation } from "../store/api/userApi";
 import { authActions } from "../store/reducers/authReducer";
 import { CustomeErrorType } from "../types/userTypes";

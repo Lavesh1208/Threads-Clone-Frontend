@@ -8,14 +8,14 @@ import {
 export const userApi = createApi({
 	reducerPath: "userApi",
 	baseQuery: fetchBaseQuery({
-		baseUrl: "http://127.0.0.1:5000/api",
+		baseUrl: "http://127.0.0.1:5000/api/users",
 		credentials: "include",
 	}),
 	tagTypes: ["User"],
 	endpoints: (builder) => ({
 		signup: builder.mutation<UserResponse, UserInput>({
 			query: (body) => ({
-				url: "/users/signup",
+				url: "/signup",
 				method: "POST",
 				body,
 			}),
@@ -23,7 +23,7 @@ export const userApi = createApi({
 		}),
 		login: builder.mutation<UserResponse, Partial<UserInput>>({
 			query: (body) => ({
-				url: "/users/login",
+				url: "/login",
 				method: "POST",
 				body,
 			}),
@@ -31,7 +31,7 @@ export const userApi = createApi({
 		}),
 		updateUser: builder.mutation<UserResponse, UpdateUserInput>({
 			query: ({ body, _id, token }) => ({
-				url: `/users/update/${_id}`,
+				url: `/update/${_id}`,
 				method: "PUT",
 				body,
 				headers: {
@@ -40,18 +40,33 @@ export const userApi = createApi({
 			}),
 			invalidatesTags: ["User"],
 		}),
-		// getUser: builder.query<IUser, string>({
-		// 	query: (token) => ({
-		// 		url: `/users/profile`,
-		// 		method: "GET",
-		// 		headers: {
-		// 			Authorization: `Bearer ${token}`,
-		// 		},
-		// 	}),
-		// 	providesTags: ["User"],
-		// }),
+		followUnFollow: builder.mutation<
+			{ message: string; following: boolean },
+			Partial<UpdateUserInput>
+		>({
+			query: ({ _id, token }) => ({
+				url: `/follow/${_id}`,
+				method: "POST",
+				headers: {
+					Authorization: `Bearer ${token}`,
+				},
+			}),
+			invalidatesTags: ["User"],
+		}),
+		getUser: builder.query<UserResponse, string>({
+			query: (username) => ({
+				url: `/profile/${username}`,
+				method: "GET",
+			}),
+			providesTags: ["User"],
+		}),
 	}),
 });
 
-export const { useSignupMutation, useLoginMutation, useUpdateUserMutation } =
-	userApi;
+export const {
+	useSignupMutation,
+	useLoginMutation,
+	useUpdateUserMutation,
+	useGetUserQuery,
+	useFollowUnFollowMutation,
+} = userApi;

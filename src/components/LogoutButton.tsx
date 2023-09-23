@@ -2,7 +2,7 @@ import { Button } from "@chakra-ui/react";
 import { FiLogOut } from "react-icons/fi";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import useShowToast from "../hooks/useToastHook";
+import useShowToast from "../hooks/useShowToast";
 import { authActions } from "../store/reducers/authReducer";
 import { userActions } from "../store/reducers/userReducer";
 
