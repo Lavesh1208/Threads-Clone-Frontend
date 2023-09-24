@@ -4,7 +4,7 @@ import useShowToast from "./useShowToast";
 const usePreviewImg = () => {
 	const [imgUrl, setImgUrl] = useState<string | null>(null);
 	const showToast = useShowToast();
-	const handleImgageChange = (e: ChangeEvent<HTMLInputElement>) => {
+	const handleImageChange = (e: ChangeEvent<HTMLInputElement>) => {
 		const file = e?.target?.files?.[0];
 		if (file && file.type.startsWith("image/")) {
 			const reader = new FileReader();
@@ -19,7 +19,7 @@ const usePreviewImg = () => {
 			setImgUrl(null);
 		}
 	};
-	return { imgUrl, handleImgageChange, setImgUrl };
+	return { imgUrl, handleImageChange, setImgUrl };
 };
 
 export default usePreviewImg;

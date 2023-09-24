@@ -13,7 +13,7 @@ import {
 import { useEffect, useRef, useState } from "react";
 import { RootState } from "../store/store";
 import { useDispatch, useSelector } from "react-redux";
-import userPreviewImg from "../hooks/usePreviewImg";
+import usePreviewImg from "../hooks/usePreviewImg";
 import { useUpdateUserMutation } from "../store/api/userApi";
 import useShowToast from "../hooks/useShowToast";
 import { CustomeErrorType } from "../types/userTypes";
@@ -33,7 +33,7 @@ const UpdateProfilePage = () => {
 	});
 	const fileRef = useRef<HTMLInputElement | null>(null);
 
-	const { handleImgageChange, imgUrl, setImgUrl } = userPreviewImg();
+	const { handleImageChange, imgUrl, setImgUrl } = usePreviewImg();
 
 	const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
@@ -82,7 +82,7 @@ const UpdateProfilePage = () => {
 									type="file"
 									hidden
 									ref={fileRef}
-									onChange={handleImgageChange}
+									onChange={handleImageChange}
 								/>
 							</Center>
 						</Stack>

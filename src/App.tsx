@@ -9,12 +9,13 @@ import { useSelector } from "react-redux";
 import { RootState } from "./store/store";
 import LogoutButton from "./components/LogoutButton";
 import UpdateProfilePage from "./pages/UpdateProfilePage";
+import CreatePost from "./components/CreatePost";
 
 function App() {
 	const { userInfo } = useSelector((state: RootState) => state.user);
 	return (
 		<Container maxW="620px">
-			<Header />
+			{userInfo && <Header userInfo={userInfo} />}
 			<Routes>
 				<Route
 					index
@@ -34,6 +35,7 @@ function App() {
 			</Routes>
 
 			{userInfo && <LogoutButton />}
+			{userInfo && <CreatePost userInfo={userInfo} />}
 		</Container>
 	);
 }

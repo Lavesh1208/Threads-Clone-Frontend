@@ -5,7 +5,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { useGetUserQuery } from "../store/api/userApi";
 import useShowToast from "../hooks/useShowToast";
 import { CustomeErrorType, UserResponse } from "../types/userTypes";
-import { Spinner } from "@chakra-ui/react";
+import { Flex, Spinner } from "@chakra-ui/react";
 import { useSelector } from "react-redux";
 import { RootState } from "../store/store";
 
@@ -15,7 +15,9 @@ const UserPage = () => {
 	const showToast = useShowToast();
 	const navigate = useNavigate();
 	const currentUser = useSelector((state: RootState) => state.user.userInfo);
-	const { data, isSuccess, error, refetch } = useGetUserQuery(username!);
+	const { data, isSuccess, error, refetch, isLoading } = useGetUserQuery(
+		username!
+	);
 
 	useEffect(() => {
 		if (error) {
@@ -27,23 +29,23 @@ const UserPage = () => {
 		}
 	}, [error, isSuccess, data, showToast, navigate]);
 
-	if (!user) {
+	if (!user && isLoading) {
 		return (
-			<div>
-				<Spinner
-					thickness="4px"
-					speed="0.65s"
-					emptyColor="gray.200"
-					color="blue.500"
-					size="xl"
-				/>
-			</div>
+			<Flex justify={"center"}>
+				<Spinner size="xl" />
+			</Flex>
 		);
+	}
+
+	if (!user && !isLoading) {
+		return <h1>User not found</h1>;
 	}
 
 	return (
 		<div>
-			<UserHeader user={user} currentUser={currentUser} refetch={refetch} />
+			{user && (
+				<UserHeader user={user} currentUser={currentUser} refetch={refetch} />
+			)}
 			<UserPost
 				likes={4893}
 				replies={3837}
