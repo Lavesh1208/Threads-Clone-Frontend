@@ -1,23 +1,15 @@
 import { Avatar, Box, Flex, Image, Text } from "@chakra-ui/react";
-import React, { useState } from "react";
+import React from "react";
 import { BsThreeDots } from "react-icons/bs";
 import { Link } from "react-router-dom";
+import { PostResponse } from "../types/postTypes";
 import Actions from "./Actions";
 
 interface UserPostProps {
-	postImg?: string;
-	postTitle?: string;
-	likes: number;
-	replies: number;
+	post: PostResponse;
 }
 
-const UserPost: React.FC<UserPostProps> = ({
-	postImg,
-	postTitle,
-	likes,
-	replies,
-}) => {
-	const [liked, setLiked] = useState(false);
+const UserPost: React.FC<UserPostProps> = ({ post }) => {
 	return (
 		<Link to={"/markzuckerberg/post/1"}>
 			<Flex gap={3} mb={4} py={5}>
@@ -70,29 +62,29 @@ const UserPost: React.FC<UserPostProps> = ({
 						</Flex>
 					</Flex>
 
-					<Text fontSize={"sm"}>{postTitle}</Text>
-					{postImg && (
+					<Text fontSize={"sm"}>{post.text}</Text>
+					{post.img && (
 						<Box
 							borderRadius={6}
 							overflow={"hidden"}
 							border={"1px solid"}
 							borderColor={"gray.light"}
 						>
-							<Image src={postImg} w={"full"} />
+							<Image src={post.img} w={"full"} />
 						</Box>
 					)}
 
 					<Flex gap={3} my={1}>
-						<Actions liked={liked} setLiked={setLiked} />
+						<Actions post={post} />
 					</Flex>
 
 					<Flex gap={2} alignItems={"center"}>
 						<Text color={"gray.light"} fontSize="sm">
-							{replies} replies
+							{post.replies.length} replies
 						</Text>
 						<Box w={0.5} h={0.5} borderRadius={"full"} bg={"gray.light"}></Box>
 						<Text color={"gray.light"} fontSize="sm">
-							{likes} likes
+							{post.likes.length} likes
 						</Text>
 					</Flex>
 				</Flex>

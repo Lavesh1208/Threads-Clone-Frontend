@@ -1,26 +1,31 @@
 import { Container } from "@chakra-ui/react";
-import { Navigate, Route, Routes } from "react-router-dom";
-import UserPage from "./pages/UserPage";
-import PostPage from "./pages/PostPage";
-import Header from "./components/Header";
-import HomePage from "./pages/HomePage";
-import AuthPage from "./pages/AuthPage";
 import { useSelector } from "react-redux";
-import { RootState } from "./store/store";
-import LogoutButton from "./components/LogoutButton";
-import UpdateProfilePage from "./pages/UpdateProfilePage";
+import { Navigate, Route, Routes } from "react-router-dom";
 import CreatePost from "./components/CreatePost";
+import Header from "./components/Header";
+import AuthPage from "./pages/AuthPage";
+import HomePage from "./pages/HomePage";
+import PostPage from "./pages/PostPage";
+import UpdateProfilePage from "./pages/UpdateProfilePage";
+import UserPage from "./pages/UserPage";
+import { RootState } from "./store/store";
 
 function App() {
 	const { userInfo } = useSelector((state: RootState) => state.user);
 	return (
 		<Container maxW="620px">
-			{userInfo && <Header userInfo={userInfo} />}
+			<Header userInfo={userInfo} />
 			<Routes>
 				<Route
 					index
 					path="/"
-					element={userInfo ? <HomePage /> : <Navigate to="/auth" />}
+					element={
+						userInfo ? (
+							<HomePage userInfo={userInfo} />
+						) : (
+							<Navigate to="/auth" />
+						)
+					}
 				/>
 				<Route
 					path="/auth"
@@ -34,7 +39,6 @@ function App() {
 				<Route path="/:username/post/:pid" element={<PostPage />} />
 			</Routes>
 
-			{userInfo && <LogoutButton />}
 			{userInfo && <CreatePost userInfo={userInfo} />}
 		</Container>
 	);

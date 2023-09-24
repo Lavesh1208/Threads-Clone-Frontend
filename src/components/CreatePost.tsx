@@ -61,6 +61,7 @@ const CreatePost: React.FC<CreatePostProps> = ({ userInfo }) => {
 		setLoading(false);
 		setPostText("");
 		setImgUrl("");
+		onClose();
 	};
 
 	useEffect(() => {

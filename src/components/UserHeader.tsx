@@ -51,18 +51,17 @@ const UserHeader: React.FC<UserHeaderProps> = ({
 			_id: user._id,
 			token: currentUser?.token,
 		});
-		setFollowing(data?.following);
 		setUpdating(false);
 		await refetch();
 	};
 
 	useEffect(() => {
 		if (error) {
-			console.log("error", error);
 			const errorMessage = (error as CustomeErrorType).data?.message;
 			showToast("Error", errorMessage, "error");
 		} else if (isSuccess && data) {
 			showToast("Success", data.message, "success");
+			setFollowing(data.following);
 		}
 	}, [error, isSuccess, data, showToast]);
 

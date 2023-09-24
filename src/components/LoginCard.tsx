@@ -42,10 +42,10 @@ const LoginCard = () => {
 		if (error) {
 			const errorMessage = (error as CustomeErrorType).data?.message;
 			showToast("Error", errorMessage, "error");
-		} else if (isSuccess) {
+		} else if (isSuccess && data) {
 			showToast("Success", "Logged in successfully", "success");
-			dispatch(userActions.setUserInfo(data));
 			localStorage.setItem("user-threads", JSON.stringify(data));
+			dispatch(userActions.setUserInfo(data));
 			navigate("/");
 		}
 	}, [error, isSuccess, data, showToast, navigate, dispatch]);
