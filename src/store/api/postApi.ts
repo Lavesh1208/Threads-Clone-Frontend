@@ -10,7 +10,7 @@ import {
 export const postApi = createApi({
 	reducerPath: "postApi",
 	baseQuery: fetchBaseQuery({
-		baseUrl: "http://127.0.0.1:5000/api/posts",
+		baseUrl: `${import.meta.env.VITE_BACKEND_URL}/posts`,
 		credentials: "include",
 	}),
 	tagTypes: ["Posts", "UserPosts"],
