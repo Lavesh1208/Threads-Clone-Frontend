@@ -14,7 +14,7 @@ import "./index.css";
 import store from "./store/store.ts";
 
 const styles = {
-	global: (props) => ({
+	global: (props: any) => ({
 		body: {
 			color: mode("gray.800", "whiteAlpha.900")(props),
 			bg: mode("gray.100", "#101010")(props),
